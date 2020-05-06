@@ -3,6 +3,8 @@ const ffmpeg = require("fluent-ffmpeg");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
+const RSS = require('rss-generator');
+const Parser = require('rss-parser');
 const app = express();
 
 // parse application/x-www-form-urlencoded
@@ -21,27 +23,45 @@ app.use(
 
 app.set('view engine', 'pug');
 
-
 ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
 ffmpeg.setFfprobePath("/usr/bin/ffprobe");
 ffmpeg.setFlvtoolPath("/usr/bin/ffplay");
 
+var feed;
+const servername = "localhost:8080";
+const vorlesungsname = "test";
+
 // generate page from view
 app.get('/', function (req, res) {
   // create directory for new playlist
-  fs.mkdir(`${__dirname}/public/${req.query.id}`, () => {});
+  const folderName = `${__dirname}/public/${req.query.id}`;
+  const rsspath = `http://${servername}/public/${vorlesungsname}/rss.xml`;
+  if (!fs.existsSync(folderName)) {
+    fs.mkdirSync(folderName);
+    feed = new RSS({
+      title: `${req.query.id}`, //TODO Titel in html form
+      feed_url: rsspath,
+      site_url: `http://${servername}`
+    });
+    //res.status(200).send(`http://${servername}/public/${vorlesungsname}/rss.xml`);
+  }
+  else {
+    var parser = new Parser();
+    feed = parser.parseURL(rsspath);
+  }
 
   res.render('index', { 
-    id: req.query.id
+    id: req.query.id,
+    rsspath: rsspath
   });
 });
 
 app.use("/", express.static(__dirname + '/public'));
 
-// hier könnte man die feeds speichern
+/* hier könnte man die feeds speichern
 let feeds = {
   "mertensgeheimerordner": null
-};
+};*/
 
 app.post("/convert", (req, res) => {
   let file = req.files.file;
@@ -61,10 +81,15 @@ app.post("/convert", (req, res) => {
       console.log("Finished");
 
       // TODO Feed aktualisieren
-
+      feed.item({
+        title: 'title', //html form
+        enclosure: { url: `http://${servername}/public/${vorlesungsname}/${fileName}`}
+      });
+      var xml = feed.xml();
+      fs.writeFile(`${folderName}/rss.xml`, xml); //TODO foldername global
+      
       // redirect to converted audio file
       res.redirect(`${req.baseUrl}/${req.query.id}/${fileName}`);
-
 
 
       // remove video file
