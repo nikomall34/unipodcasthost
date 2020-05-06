@@ -19,11 +19,29 @@ app.use(
   })
 );
 
+app.set('view engine', 'pug');
+
+
 ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
 ffmpeg.setFfprobePath("/usr/bin/ffprobe");
 ffmpeg.setFlvtoolPath("/usr/bin/ffplay");
 
+// generate page from view
+app.get('/', function (req, res) {
+  // create directory for new playlist
+  fs.mkdir(`${__dirname}/public/${req.query.id}`, () => {});
+
+  res.render('index', { 
+    id: req.query.id
+  });
+});
+
 app.use("/", express.static(__dirname + '/public'));
+
+// hier könnte man die feeds speichern
+let feeds = {
+  "mertensgeheimerordner": null
+};
 
 app.post("/convert", (req, res) => {
   let file = req.files.file;
@@ -41,8 +59,14 @@ app.post("/convert", (req, res) => {
     .saveToFile(`${__dirname}/public/${req.query.id}/${fileName}`)
     .on("end", function (stdout, stderr) {
       console.log("Finished");
+
+      // TODO Feed aktualisieren
+
       // redirect to converted audio file
       res.redirect(`${req.baseUrl}/${req.query.id}/${fileName}`);
+
+
+
       // remove video file
       fs.unlink("tmp/" + file.name, function (err) {
         if (err) throw err;
