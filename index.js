@@ -25,13 +25,9 @@ app.use(
   })
 );
 
-ffmpeg.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
-
-ffmpeg.setFfprobePath("C:/ffmpeg/bin");
-
-ffmpeg.setFlvtoolPath("C:/flvtool");
-
-console.log(ffmpeg);
+ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
+ffmpeg.setFfprobePath("/usr/bin/ffprobe");
+ffmpeg.setFlvtoolPath("/usr/bin/ffplay");
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -80,4 +76,4 @@ app.post("/convert", (req, res) => {
   //.pipe(res, { end: true });
 });
 
-app.listen(5000);
+app.listen(8080);
