@@ -16,6 +16,7 @@
     "express-fileupload": "^1.1.7-alpha.3",
     "fluent-ffmpeg": "^2.1.2",
     "nodemon": "^2.0.3",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "rss-generator": "0.0.3"
   }
 }
