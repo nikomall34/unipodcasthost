@@ -50,8 +50,8 @@ app.get("/", function (req, res) {
         let feeddata = {
             meta: {
                 title: `${req.query.id}`, //TODO Titel in html form
-                feed_url: `${req.protocol}://${req.host}:${PORT}/${req.query.id}/rss.xml`,
-                site_url: `${req.protocol}://${req.host}:${PORT}/${req.query.id}/`
+                feed_url: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/rss.xml`,
+                site_url: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/`
             },
             items: []
         };
@@ -61,7 +61,7 @@ app.get("/", function (req, res) {
 
     res.render("index", {
         id: req.query.id,
-        rsspath: `${req.protocol}://${req.host}:${PORT}/${req.query.id}/rss.xml`
+        rsspath: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/rss.xml`
     });
 });
 
@@ -94,7 +94,7 @@ app.post("/convert", (req, res) => {
             let feeddata = JSON.parse(fs.readFileSync(folderName + "/feed.json").toString());
             feeddata.items.push({
                 title: fileName, //html form
-                enclosure: {url: `${req.protocol}://${req.host}:${PORT}/${req.query.id}/${fileName}`}
+                enclosure: {url: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/${fileName}`}
             });
             fs.writeFileSync(folderName + "/feed.json", JSON.stringify(feeddata));
             regenerateFeed(req.query.id, feeddata);
