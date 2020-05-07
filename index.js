@@ -78,7 +78,7 @@ app.post("/convert", (req, res) => {
     let fileName = `${file.name.split(".").slice(0, -1).join(".")}.mp3`; // replace file extension with mp3
     // save video file to tmp directory
     file.mv("tmp/" + file.name, function (err) {
-        if (err) return res.sendStatus(500).send(err);
+        if (err) return res.sendStatus(500)
         console.log("File Uploaded successfully");
     });
     // convert to mp3
