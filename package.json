@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "clean": "rm -rf public/* tmp/*"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "nodemon": "^2.0.3",
     "pug": "^2.0.4",
-    "rss-generator": "0.0.3"
+    "rss-generator": "0.0.3",
+    "rss-parser": "^3.8.0"
   }
 }
