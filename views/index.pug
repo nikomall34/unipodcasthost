@@ -1,21 +1,28 @@
-html(lang="en")
+html(lang="de")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Online Video to Audio Converter
+    title LeCast - Lecture Podcast
     link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+    link(rel="stylesheet" href="style.css")
+  
   body
-    div(class="container")
-        br
-        h1(style="text-align: center;") Online Video to Audio Converter
-        - const url = "/convert?id=" + id
-        form(action=url method="post" enctype="multipart/form-data")
-            div(class="form-group")
-                input(type="file" name="file")
-            div(class="form-group")
-                label(for="Title") Title:
-                input(type="text" id="Title" name="Title")
-            div(class="form-group")
-                button(class="btn btn-danger btn-block") Convert
-        br
-        a(href=rsspath) hier gehts zum RSS-Feed
+    form(class = "border-class" action=url method="post" enctype="multipart/form-data")
+      div(class="header")
+        h2 LeCast - Lecture Podcast
+      
+      div(class="form-group")
+        input(class="form-control-file" type="file" name="file")
+      div(class="form-group")
+        label(for="Title") Titel:
+        input(type="text" class="form-control" id="Title" name="Title")
+      div(class="form-group")
+        label(for="Date") Datum:
+        input(type="text" class="form-control" id="Date" name="Datum")  
+      div(class="form-group")
+        label(for="Title") Titel:
+        textarea(class="form-control" id="description" rows = "4")
+      div(class="form-group")
+        button(class="btn btn-warning btn-sm") Convert
+      br
+      
