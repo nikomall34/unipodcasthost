@@ -1,0 +1,35 @@
+body{
+    color: orange;
+    background-image: url("kabel.png");
+    background-repeat: no-repeat;
+}
+
+form{
+    position: absolute;
+    right: 30px;
+    top: 100px;
+
+
+    width: 500px;
+}
+
+.header{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.border-class
+{
+  border:thin black solid;
+  border-radius: 25px;
+  margin:20px;
+  padding:20px;
+  background-color: black;
+
+  
+}
+.btn{
+    color: black;
+    background-color: orange;
+    float: right;
+
+}
