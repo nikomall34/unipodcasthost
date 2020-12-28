@@ -8,14 +8,33 @@ html(lang="en")
     div(class="container")
         br
         h1(style="text-align: center;") Online Video to Audio Converter
-        - const url = "/convert?id=" + id
-        form(action=url method="post" enctype="multipart/form-data")
+        - const urlA = "/addItem?id=" + id
+        form(action=urlA method="post" enctype="multipart/form-data")
             div(class="form-group")
-                input(type="file" name="file")
+                input(type="file" name="file" required)
             div(class="form-group")
                 label(for="Title") Title:
                 input(type="text" id="Title" name="Title")
             div(class="form-group")
-                button(class="btn btn-danger btn-block") Convert
+                button(class="btn btn-danger btn-block") AddItem
         br
+        - const urlR = "/removePlaylist?id=" + id
+        form(action=urlR method="post")
+            div(class="form-group")
+                button(class="btn btn-danger btn-block") RemovePlaylist
+        br
+        - const urlC = "/create?id=" + id
+        form(action=urlC method="post" enctype="multipart/form-data")
+            div(class="form-group")
+                button(class="btn btn-danger btn-block") CreatePlaylist
+        br
+        - const urlRI = "/removeItem?id=" + id
+        form(action=urlRI method="post")
+            div(class="form-group")
+                label(for="Title") Item:
+                input(type="text" id="Title" name="Title" required)
+            div(class="form-group")
+                button(class="btn btn-danger btn-block") DeleteItem
+        br
+        - // RSS-Feed nur anzeigen wenn playlist erstellt wurde
         a(href=rsspath) hier gehts zum RSS-Feed
