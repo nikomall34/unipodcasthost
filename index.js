@@ -49,8 +49,8 @@ function addItem(fileName, req) {
     let feeddata = JSON.parse(fs.readFileSync(folderName + "/feed.json").toString());
     feeddata.items.push({
         title: `${req.body.Title}`,
-        description:,
-        author:,
+        description: `${req.body.Title}`,
+        author: `${req.body.Title}`,
         enclosure: {url: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/${fileName}`}
     });
     fs.writeFileSync(folderName + "/feed.json", JSON.stringify(feeddata));
@@ -122,8 +122,8 @@ app.post("/create", (req, res) => {
         let feeddata = {
             meta: {
                 title: `${req.body.Title}`,
-                description:,
-                docs:,
+                description: `${req.body.Title}`,
+                docs: `${req.body.Title}`,
                 feed_url: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/rss.xml`,
                 site_url: `${req.protocol}://${req.hostname}:${PORT}/${req.query.id}/`
             },
